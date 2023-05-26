@@ -15,16 +15,16 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 app.post("/api/ai", (req, res) => {
-  const { method, text } = req.body;
+  const { method, input } = req.body;
 
-  if (method && text) {
+  if (method && input) {
     const options = openAiApis[method];
 
     if (options) {
       openai
         .createCompletion({
           ...options,
-          prompt: `${options.prompt} ${text}`,
+          prompt: `${options.prompt} ${input}`,
         })
         .then((response) => {
           if (response.data) {
